@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Button, Container, Heading, VStack, HStack, IconButton, List, ListItem, Text, Input, Select, Tag, TagLabel, TagCloseButton } from '@chakra-ui/react';
 import { FaTrash, FaMicrophone, FaPlay } from 'react-icons/fa';
 
@@ -11,6 +11,21 @@ const VoiceNotes = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+
+  useEffect(() => {
+    const savedVoiceNotes = JSON.parse(localStorage.getItem('voiceNotes')) || [];
+    const savedCategories = JSON.parse(localStorage.getItem('voiceNoteCategories')) || [];
+    setVoiceNotes(savedVoiceNotes);
+    setCategories(savedCategories);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('voiceNotes', JSON.stringify(voiceNotes));
+  }, [voiceNotes]);
+
+  useEffect(() => {
+    localStorage.setItem('voiceNoteCategories', JSON.stringify(categories));
+  }, [categories]);
 
   const handleStartRecording = async () => {
     if (!isRecording) {
