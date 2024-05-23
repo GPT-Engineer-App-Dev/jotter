@@ -8,8 +8,8 @@ const Index = () => {
       <VStack spacing={4}>
         <Heading as="h1" size="2xl">Welcome to Our Website</Heading>
         <Text fontSize="xl">Experience the best of our services.</Text>
-        <Button as={Link} to="/notes" rightIcon={<FaRocket />} colorScheme="teal" variant="solid" size="lg">
-          Get Started
+        <Button as={Link} to="/voice-notes" rightIcon={<FaRocket />} colorScheme="teal" variant="solid" size="lg">
+          Voice Notes
         </Button>
       </VStack>
     </Container>
