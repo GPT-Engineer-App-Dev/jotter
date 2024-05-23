@@ -11,6 +11,9 @@ const Index = () => {
         <Button as={Link} to="/voice-notes" rightIcon={<FaRocket />} colorScheme="teal" variant="solid" size="lg">
           Voice Notes
         </Button>
+        <Button as={Link} to="/notes" rightIcon={<FaRocket />} colorScheme="teal" variant="solid" size="lg">
+          Text Notes
+        </Button>
       </VStack>
     </Container>
   );
