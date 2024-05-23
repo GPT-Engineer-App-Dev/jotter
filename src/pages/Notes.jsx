@@ -9,6 +9,7 @@ const Notes = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +42,7 @@ const Notes = () => {
   };
 
   const filteredNotes = filterCategory ? notes.filter(note => note.category === filterCategory) : notes;
+  const searchedNotes = searchQuery ? filteredNotes.filter(note => note.content.toLowerCase().includes(searchQuery.toLowerCase())) : filteredNotes;
 
   return (
     <Container centerContent maxW="container.md" py={8}>
@@ -94,8 +96,14 @@ const Notes = () => {
             <option key={index} value={category}>{category}</option>
           ))}
         </Select>
+        <Input
+          placeholder="Search Notes"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          mb={4}
+        />
         <VStack spacing={4} width="100%">
-          {filteredNotes.map(note => (
+          {searchedNotes.map(note => (
             <Box key={note.id} p={4} borderWidth="1px" borderRadius="md" width="100%">
               <HStack justifyContent="space-between">
                 <Heading as="h3" size="md">{note.title}</Heading>
