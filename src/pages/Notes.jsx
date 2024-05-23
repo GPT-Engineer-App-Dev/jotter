@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Container, Heading, Input, Textarea, VStack, HStack, IconButton, Select, Tag, TagLabel } from '@chakra-ui/react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 
@@ -10,6 +10,21 @@ const Notes = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+    const savedCategories = JSON.parse(localStorage.getItem('categories')) || [];
+    setNotes(savedNotes);
+    setCategories(savedCategories);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
+
+  useEffect(() => {
+    localStorage.setItem('categories', JSON.stringify(categories));
+  }, [categories]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
