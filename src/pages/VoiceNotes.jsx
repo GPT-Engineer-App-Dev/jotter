@@ -8,6 +8,7 @@ const VoiceNotes = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
@@ -41,6 +42,7 @@ const VoiceNotes = () => {
   };
 
   const filteredVoiceNotes = filterCategory ? voiceNotes.filter(note => note.category === filterCategory) : voiceNotes;
+  const searchedVoiceNotes = searchQuery ? filteredVoiceNotes.filter(note => note.category.toLowerCase().includes(searchQuery.toLowerCase())) : filteredVoiceNotes;
 
   return (
     <Container centerContent maxW="container.md" py={8}>
@@ -65,6 +67,12 @@ const VoiceNotes = () => {
             <option key={index} value={category}>{category}</option>
           ))}
         </Select>
+        <Input
+          placeholder="Search Voice Notes"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          mb={4}
+        />
         <Box width="100%">
           <HStack justifyContent="center" mb={4}>
             <Button
@@ -77,7 +85,7 @@ const VoiceNotes = () => {
           </HStack>
         </Box>
         <List spacing={3} width="100%">
-          {filteredVoiceNotes.map(note => (
+          {searchedVoiceNotes.map(note => (
             <ListItem key={note.id} p={4} borderWidth="1px" borderRadius="md">
               <HStack justifyContent="space-between">
                 <Text>Voice Note {new Date(note.id).toLocaleString()}</Text>
